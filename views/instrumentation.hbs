@@ -1,0 +1,112 @@
+<h1>{{title}}</h1>
+
+
+<div id="map" style="width:100%;height:760px"></div>
+
+
+<script>
+
+  //Set the map projection to Lambert 93
+  proj4.defs("EPSG:3950", "+proj=lcc +lat_1=49.25 +lat_2=50.75 +lat_0=50 +lon_0=3 +x_0=1700000 +y_0=9200000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+
+
+
+
+
+  // Set the center of the map and zoom level
+  var map = L.map('map', {
+    center: [50.4762409, 2.5471588],
+    zoom: 18,
+    minZoom: 1,
+    maxZoom: 20
+  })
+
+  /* preparing two types of base map */
+  var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+    '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+    'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+
+  var grayscale = L.tileLayer(mbUrl, { id: 'mapbox.light', attribution: mbAttr });
+  var streets = L.tileLayer(mbUrl, { id: 'mapbox.streets', attribution: mbAttr });
+  /* End of preparing base map */
+
+  var layers = [streets] // layers array contians the all layers which will be added to the map
+  var colors = ['blue', 'blue', 'red', 'brown', 'black', 'orange', 'gray', 'green', 'white', 'green', 'yellow']
+  var overlays = {} // this object is used to fill it with all layers it is used for checkbox list
+
+  /* The following loop creates layers with the name of its json file, it gets the color for each layer from colors array 
+     then it add the data of each layer using getJSON AJAX function*/
+  '{{#layerNames}}'
+  window['{{this}}'] = new L.Proj.GeoJSON(null, {
+    onEachFeature: function (feature, layer) {
+      layer.bindPopup(whenClicked(feature));
+    },
+    style: {
+      weight: 5,
+      opacity: 1,
+      color: colors['{{@index}}'] //getRandomColor()
+    }
+  });
+
+  $.getJSON("/geojson/{{this}}.geojson", function (data) {
+    window['{{this}}'].addData(data)
+  })
+
+  overlays['{{this}}'] = window['{{this}}'] // Add the created layer to overlays object
+  layers.push(window['{{this}}']) // Add the created layer to layers array
+  '{{/layerNames}}'
+  /* End of the loop */
+
+  var group = L.layerGroup(layers).addTo(map); // Add all created layers to the map as a layergroup
+
+
+  
+
+  /* This part is responsible for adding radio buttons and checkboxes on the map*/
+  var baseLayers = {
+    "Grayscale": grayscale,
+    "Streets": streets
+  };
+  L.control.layers(baseLayers, overlays).addTo(map);
+  /* End of the part*/
+
+
+  function style() {
+    return {
+      weight: 5,
+      opacity: 1,
+      color: getRandomColor()
+    }
+
+  }
+  // Create random colors
+  function getRandomColor() {
+    var letters = '0123456789ABCDEF';
+    var color = '#';
+    for (var i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  }
+
+
+  // Popup window settings
+  function whenClicked(feature) {
+    var customPopup = "<h5 class='card-title'>" +
+      feature.properties.Layer + "</h5>";
+    for (key in feature.properties) {
+      customPopup += "<div> <b>" + capitalizeFirstLetter(key) + ":</b> " + feature.properties[key] + "</div>";
+    }
+    customPopup += "</div></div>";
+    return customPopup
+  }
+
+
+  //Capitalize the first letter of any string "used for features"
+  function capitalizeFirstLetter(string) {
+    var str = string.replace(/_/g, " ");
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+</script>

@@ -1,0 +1,23 @@
+<h1>{{title}}</h1>
+<ol id="contain-all">
+  <li class="child"><a href="/sociallife/chat">Chat</a></li>
+  <li class="child"><a href="/sociallife/suggestions">Suggestions et Remarques</a></li>
+  <li class="child"><a href="/sociallife/evenements">Evenements</a></li>
+  <li class="child"><a href="/sociallife/informations">Informations Pratiques</a></li>
+</ol>
+
+
+<style>
+  #contain-all {
+    display: flex;
+    flex-flow: column wrap;
+  }
+  .child {
+    width: 25%;
+    height: 60px;
+    font-size: 1.5rem
+  }
+  .child a:hover {
+    color: crimson;
+  }
+</style>

@@ -1,0 +1,22 @@
+<h1>{{title}}</h1>
+<ol id="contain-all">
+  {{#layerNames}}
+  <li class="child"><a href="/maintenance/{{this}}">{{this}}</a></li>
+  {{/layerNames}}
+</ol>
+
+
+<style>
+  #contain-all {
+    display: flex;
+    flex-flow: column wrap;
+  }
+  .child {
+    width: 25%;
+    height: 60px;
+    font-size: 1.5rem
+  }
+  .child a:hover {
+    color: crimson;
+  }
+</style>

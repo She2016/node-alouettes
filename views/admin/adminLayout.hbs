@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Admin Layout</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/assets/css/themify-icons.css">
+  <link rel="stylesheet" href="/assets/css/flag-icon.min.css">
+  <link rel="stylesheet" href="/assets/css/cs-skin-elastic.css">
+  <link rel="stylesheet" href="/assets/scss/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.print.css" rel="stylesheet" media="print">
+  <script src="/assets/js/vendor/jquery-2.1.4.min.js"></script>
+  <script src="/assets/js/bootstrap.min.js"></script>
+  <script src="/assets/js/jquery-form-validator.min.js"></script>
+  <script src="/assets/js/popper.min.js"></script>
+  <script src="/assets/js/plugins.js"></script>
+  <script src="/assets/js/main.js"></script>
+  <script src="/assets/js/moment.js">   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.min.js"></script>
+</head>
+
+<body>
+  <!-- Left Panel-->
+  <aside class="left-panel" id="left-panel">
+    <nav class="navbar navbar-expand-sm navbar-default">
+      <div class="navbar-header">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-menu" aria-controls="main-menu"
+          aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button><a class="navbar-brand"
+          href="./">Alouettes</a><a class="navbar-brand hidden" href="./"><img src="/images/logo2.png" alt="Logo"></a>
+      </div>
+      <div class="main-menu collapse navbar-collapse" id="main-menu">
+        <ul class="nav navbar-nav">
+          <li><a href="/"><i class="menu-icon fa fa-dashboard"></i>Dashboard</a></li>
+          <h3 class="menu-title">Elements</h3>
+          <!-- /.menu-title-->
+          <li class="menu-item-has-children dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false"><i class="menu-icon fa fa-laptop"></i>Events</a>
+            <ul class="sub-menu children dropdown-menu">
+              <li><i class="fa fa-puzzle-piece"></i><a href="/events">All Events</a></li>
+              <li><i class="fa fa-id-badge"></i><a href="/events/create">Create an event</a></li>
+            </ul>
+          </li>
+          <li class="menu-item-has-children dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false"><i class="menu-icon fa fa-table"></i>Information</a>
+            <ul class="sub-menu children dropdown-menu">
+              <li><i class="fa fa-table"></i><a href="/information">All Information</a></li>
+              <li><i class="fa fa-table"></i><a href="/information/create">Create an Information</a></li>
+            </ul>
+          </li>
+          <li class="menu-item-has-children active dropdown"><a class="dropdown-toggle" href="#" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false"><i class="menu-icon fa fa-th"></i>Users</a>
+            <ul class="sub-menu children dropdown-menu">
+              <li><i class="menu-icon fa fa-th"></i><a href="/users/all">All users</a></li>
+              <li><i class="menu-icon fa fa-th"></i><a href="/users/create">Create a user</a>
+                <!-- /.navbar-collapse-->
+              </li>
+            </ul>
+            <!-- /#left-panel-->
+            <!-- Left Panel-->
+            <!-- Right Panel-->
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </aside>
+  <div class="right-panel" id="right-panel">
+    <!-- Header-->
+    <header class="header" id="header">
+      <div class="header-menu">
+        <div class="col-sm-7"><a class="menutoggle pull-left" id="menuToggle"><i class="fa fa fa-tasks"></i></a>
+          <div class="header-left">
+            <button class="search-trigger"><i class="fa fa-search"></i></button>
+            <div class="form-inline">
+              <form class="search-form">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search ..." aria-label="Search">
+                <button class="search-close" type="submit"><i class="fa fa-close"></i></button>
+              </form>
+            </div>
+            <div class="dropdown for-notification">
+              <button class="btn btn-secondary dropdown-toggle" id="notification" type="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false"><i class="fa fa-bell"></i><span class="count bg-danger">5</span></button>
+              <div class="dropdown-menu" aria-labelledby="notification">
+                <p class="red">You have 3 Notification</p><a class="dropdown-item media bg-flat-color-1" href="#"><i
+                    class="fa fa-check"></i>
+                  <p>Server #1 overloaded.</p>
+                </a><a class="dropdown-item media bg-flat-color-4" href="#"><i class="fa fa-info"></i>
+                  <p>Server #2 overloaded.</p>
+                </a><a class="dropdown-item media bg-flat-color-5" href="#"><i class="fa fa-warning"></i>
+                  <p>Server #3 overloaded.</p>
+                </a>
+              </div>
+            </div>
+            <div class="dropdown for-message">
+              <button class="btn btn-secondary dropdown-toggle" id="message" type="button" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false"><i class="ti-email"></i><span class="count bg-primary">9</span></button>
+              <div class="dropdown-menu" aria-labelledby="message">
+                <p class="red">You have 4 Mails</p><a class="dropdown-item media bg-flat-color-1" href="#"><span class="photo media-left"><img
+                      alt="avatar" src="/images/avatar/1.jpg"></span><span class="message media-body"><span class="name float-left">Jonathan
+                      Smith</span><span class="time float-right">Just now</span>
+                    <p>Hello, this is an example msg</p>
+                  </span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-5">
+          <div id="userName" class="user-area dropdown float-right">
+            
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="breadcrumbs">
+      <div class="col-sm-4">
+        <div class="page-header float-left">
+          <div class="page-title">
+            <h1>Dashboard</h1>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-8">
+        <div class="page-header float-right">
+          <div class="page-title">
+            <ol class="breadcrumb text-right">
+              <li><a href="#">Dashboard</a></li>
+              <li><a href="#">Forms</a></li>
+              <li class="active">Basic</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid">
+      {{{body}}}
+    </div>
+  </div>
+
+
+  <script type="text/javascript">
+    jQuery(document).ready(function () {
+    if (sessionStorage.getItem('user_name')) {
+      jQuery('#userName').html(`Hello <b>${sessionStorage.getItem('user_name')}</b>`);
+    } else {
+      jQuery('#userName').text('<a href="./">Login</a>');
+    }
+    })
+  </script>
+
+</body>
+
+</html>

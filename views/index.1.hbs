@@ -1,0 +1,232 @@
+<h1>{{title}}</h1>
+
+
+<div id="map" style="width:100%;height:800px"></div>
+{{#js}}
+<script src='/javascripts/{{this}}'></script>
+{{/js}}
+
+<script>
+
+  //Set projection to Lambert 93
+  proj4.defs("EPSG:3950", "+proj=lcc +lat_1=49.25 +lat_2=50.75 +lat_0=50 +lon_0=3 +x_0=1700000 +y_0=9200000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+
+  // Add school layer to the map
+  var Lots = new L.Proj.GeoJSON(Lots, {
+    style: {
+      weight: 5,
+      opacity: 1,
+      color: 'blue',
+      fillOpacity: 0.3,
+      fillColor: '#ff0000'
+    }
+  });
+
+  var AEP = new L.Proj.GeoJSON(AEP, {
+    onEachFeature: function (feature, layer) {
+      layer.bindPopup(whenClicked(feature));
+    },
+    style: {
+      weight: 5,
+      opacity: 1,
+      color: 'blue',
+      fillOpacity: 0.3,
+      fillColor: '#ff0000'
+    }
+  });
+
+  var Assainissement_EP = new L.Proj.GeoJSON(Assainissement_EP, {
+    style: {
+      weight: 5,
+      opacity: 1,
+      color: '#78deaf',
+      fillOpacity: 0.3,
+      fillColor: '#ff0000'
+    }
+  });
+
+  var Assainissement_EU = new L.Proj.GeoJSON(Assainissement_EU, {
+    style: {
+      weight: 5,
+      opacity: 1,
+      color: 'brown',
+      fillOpacity: 0.3,
+      fillColor: '#ff0000'
+    }
+  });
+
+  var Eclairage_Candelabres = new L.Proj.GeoJSON(Eclairage_Candelabres, {
+    style: {
+      weight: 5,
+      opacity: 1,
+      color: 'orange',
+      fillOpacity: 0.3,
+      fillColor: '#ff0000'
+    }
+  });
+
+  var Eclairage_Fourreaux = new L.Proj.GeoJSON(Eclairage_Fourreaux, {
+    style: {
+      weight: 5,
+      opacity: 1,
+      color: 'orange',
+      fillOpacity: 0.3,
+      fillColor: '#ff0000'
+    }
+  });
+
+  var Poteaux_incendie = new L.Proj.GeoJSON(Poteaux_incendie, {
+    style: {
+      weight: 5,
+      opacity: 1,
+      color: 'red',
+      fillOpacity: 0.3,
+      fillColor: '#ff0000'
+    }
+  });
+
+  var Regards_EP = new L.Proj.GeoJSON(Regards_EP, {
+    style: {
+      weight: 5,
+      opacity: 1,
+      color: 'gray',
+      fillOpacity: 0.3,
+      fillColor: '#ff0000'
+    }
+  });
+
+  var Regards_EU = new L.Proj.GeoJSON(Regards_EU, {
+    style: {
+      weight: 5,
+      opacity: 1,
+      color: 'gray',
+      fillOpacity: 0.3,
+      fillColor: '#ff0000'
+    }
+  });
+
+  var Telecom_Cables = new L.Proj.GeoJSON(Telecom_Cables, {
+    style: {
+      weight: 5,
+      opacity: 1,
+      color: 'green',
+      fillOpacity: 0.3,
+      fillColor: '#ff0000'
+    }
+  });
+
+  var Telecom_Chambres = new L.Proj.GeoJSON(Telecom_Chambres, {
+    style: {
+      weight: 5,
+      opacity: 1,
+      color: 'green',
+      fillOpacity: 0.3,
+      fillColor: '#ff0000'
+    }
+  });
+
+  var mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+    '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+    'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+
+  var grayscale = L.tileLayer(mbUrl, { id: 'mapbox.light', attribution: mbAttr }),
+    streets = L.tileLayer(mbUrl, { id: 'mapbox.streets', attribution: mbAttr });
+
+  // Set the center of the map and zoom level
+  var map = L.map('map', {
+    center: [50.4762409, 2.5471588],
+    zoom: 18,
+    minZoom: 1,
+    maxZoom: 20
+  })
+
+  var layers = [
+    grayscale,
+    Lots,
+    AEP,
+    Assainissement_EP,
+    Assainissement_EU,
+    Eclairage_Candelabres,
+    Eclairage_Fourreaux,
+    Poteaux_incendie,
+    Regards_EP,
+    Regards_EU,
+    Telecom_Cables,
+    Telecom_Chambres
+  ]
+
+
+  L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    subdomains: ['a', 'b', 'c']
+  }).addTo(map);
+
+  var group = L.layerGroup(layers).addTo(map);
+
+
+  var baseLayers = {
+    "Grayscale": grayscale,
+    "Streets": streets
+  };
+
+  var overlays = {
+    "Lots": Lots,
+    "AEP": AEP,
+    "Assainissement_EP": Assainissement_EP,
+    "Assainissement_EU": Assainissement_EU,
+    "Eclairage_Candelabres": Eclairage_Candelabres,
+    "Eclairage_Fourreaux": Eclairage_Fourreaux,
+    "Poteaux_incendie": Poteaux_incendie,
+    "Regards_EP": Regards_EP,
+    "Regards_EU": Regards_EU,
+    "Telecom_Cables": Telecom_Cables,
+    "Telecom_Chambres": Telecom_Chambres
+  };
+
+  L.control.layers(baseLayers, overlays).addTo(map);
+
+
+
+
+  function style(feature) {
+    if (feature.geometry.type == 'LineString') {
+      return {
+        weight: 5,
+        opacity: 1,
+        color: 'orange',
+        fillOpacity: 0.3,
+        fillColor: '#ff0000'
+      };
+    } else {
+      return {
+        weight: 5,
+        opacity: 1,
+        color: 'green',
+        fillOpacity: 0.3,
+        fillColor: '#666666'
+      };
+    }
+  }
+
+
+  //Inject the properties of each feature in div information1
+  function whenClicked(feature) {
+    var customPopup = "<h5 class='card-title'>" +
+      feature.properties.Layer + "</h5>";
+    for (key in feature.properties) {
+      customPopup += "<div> <b>" + capitalizeFirstLetter(key) + ":</b> " + feature.properties[key] + "</div>";
+    }
+    customPopup += "</div></div>";
+    return customPopup
+  }
+
+
+  //Capitalize the first letter of any string "used for features"
+  function capitalizeFirstLetter(string) {
+    var str = string.replace(/_/g, " ");
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+
+</script>

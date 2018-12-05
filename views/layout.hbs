@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{{title}}</title>
+  <link rel='stylesheet' href='https://unpkg.com/leaflet@1.3.1/dist/leaflet.css'>
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+  <!-- Our Custom CSS -->
+  <link rel="stylesheet" href="/assets/css/allouettes.css">
+
+
+  <!-- Font Awesome JS -->
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ"
+    crossorigin="anonymous"></script>
+  <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
+    crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="/assets/js/mustache.js"></script>
+  <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+  <script src="/assets/js/leaflet.ajax.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/1.4.0/proj4.js"></script>
+  <script src="/assets/js/proj4leaflet.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="/assets/js/bootstrap.min.js"></script>
+  <script src="/javascripts/login.js"></script>
+
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+      <div class="sidebar-header">
+        <a href="/">
+          <h3>Alouettes</h3>
+        </a>
+      </div>
+
+      <ul class="list-unstyled components">
+        <p>All Layers</p>
+        <li class="active">
+          <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
+          <ul class="collapse list-unstyled" id="homeSubmenu">
+            <li>
+              <a href="#">Home 1</a>
+            </li>
+            <li>
+              <a href="#">Home 2</a>
+            </li>
+            <li>
+              <a href="#">Home 3</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a href="/instrumentation">Instrumentation</a>
+        </li>
+        {{!-- <li>
+          <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
+          <ul class="collapse list-unstyled" id="pageSubmenu">
+            <li>
+              <a href="#">Page 1</a>
+            </li>
+            <li>
+              <a href="#">Page 2</a>
+            </li>
+            <li>
+              <a href="#">Page 3</a>
+            </li>
+          </ul>
+        </li> --}}
+        <li>
+          <a href="/maintenance">Maintenance</a>
+        </li>
+        <li>
+          <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Sociallife</a>
+          <ul class="collapse list-unstyled" id="pageSubmenu">
+            <li>
+              <a href="/sociallife/chat">Chat</a>
+            </li>
+            <li>
+              <a href="/sociallife/suggestions">Suggestions</a>
+            </li>
+            <li>
+              <a href="/sociallife/evenements">Evenements</a>
+            </li>
+            <li>
+              <a href="/sociallife/informations">Informations</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+
+    </nav>
+
+    <!-- Page Content  -->
+    <div id="content">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+
+          <button type="button" id="sidebarCollapse" class="btn btn-info">
+            <i class="fas fa-align-left"></i>
+            <span>Toggle Sidebar</span>
+          </button>
+          <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <i class="fas fa-align-justify"></i>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul id="userLogin" class="nav navbar-nav ml-auto">
+
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      {{{body}}}
+    </div>
+  </div>
+
+  <!-- Signup Modal -->
+
+  <div class="modal fade" id="modal" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content" id="modal-content">
+
+      </div>
+
+    </div>
+  </div>
+
+  <script id="template" type="text/template">
+      <div class="modal-header" style="padding:35px 50px;">
+        <h4><i class="fas fa-lock"></i> [[formtitle]]</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body" style="padding:40px 50px;">
+        <div class="alert alert-danger" role="alert" id="errorMessage" style="display:none"></div>
+        <form id="[[formid]]">
+          [[#usrName]]
+          <div class="form-group">
+            <label for="usrname"><i class="fas fa-user"></i> Username</label>
+            <input type="text" class="form-control" id="name" placeholder="Enter User Name" required>
+          </div>
+          [[/usrName]]
+          <div class="form-group">
+            <label for="mail"><i class="fas fa-envelope"></i> Email</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter email" required>
+          </div>
+          <div class="form-group">
+            <label for="psw"><i class="fas fa-eye"></i> Password</label>
+            <input type="password" class="form-control" id="password" placeholder="Enter password" required>
+          </div>
+          <div class="checkbox">
+            <label><input type="checkbox" value="" checked>Remember me</label>
+          </div>
+          <button onclick="doSubmit()" class="btn btn-success btn-block"><i class="fas fa-power-off"></i> [[btn]] </button>
+        </form>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button class="btn btn-danger" data-dismiss="modal"><i class="fas fa-ban"></i> Cancel</button>
+        <p> Or <a href="#" onclick="changeform(this)" id="[[linkId]]">[[orBtn]]</a></p>
+        <p>Forgot <a href="#">Password?</a></p>
+      </div>
+  </script>
+
+  <script id="beforeLogin" type="text/template">
+    <li class="nav-item active">
+      <a class="nav-link" href="#" onclick="changeform(this)" data-toggle="modal" data-target="#modal">Login</a>
+    </li>
+    <li class="nav-item active">
+      <a class="nav-link" href="#" onclick="changeform(this)" data-toggle="modal" data-target="#modal">Signup</a>
+    </li>
+  </script>
+
+  <script id="afterLogin" type="text/template">
+    <li class="nav-item active">
+        <a class="nav-link" href="#">[[userName]]</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="#" onclick="logout()">Logout</a>
+    </li>
+  </script>
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      Mustache.tags = ["[[", "]]"];
+      var flag = false;
+      $('#sidebarCollapse').on('click', function () {
+        $('#sidebar').toggleClass('active');
+      });
+      if (sessionStorage.getItem('user_name')) {
+        var html;
+        var template = $('#afterLogin').html();
+        html = Mustache.render(template, {
+          userName: sessionStorage.getItem('user_name')
+        });
+        $('#userLogin').html(html);
+      } else {
+        var html;
+        var template = $('#beforeLogin').html();
+        html = Mustache.render(template);
+        $('#userLogin').html(html);
+      }
+    });
+
+
+
+    // Switch between forms login of registeration
+    function changeform(e) {
+      var x = e.innerHTML;
+      var html;
+      var template = $('#template').html();
+      if (x == 'Login') {
+        html = Mustache.render(template, {
+          formtitle: "Login",
+          btn: "Login",
+          orBtn: "Sign up",
+          formid: "loginForm",
+          linkId: "signup",
+          usrName: false
+        });
+      } else {
+        html = Mustache.render(template, {
+          formtitle: "Sign Up",
+          btn: "Sign Up",
+          orBtn: "Login",
+          formid: "signupForm",
+          linkId: "login",
+          usrName: true
+        });
+      }
+      $('#modal-content').html(html);
+    }
+
+  </script>
+
+
+
+</body>
+
+</html>

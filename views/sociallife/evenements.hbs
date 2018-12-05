@@ -1,0 +1,12 @@
+<h1>{{title}}</h1>
+
+
+{{#each jsonData}}
+<div class="card mb-3">
+  <div class="card-body">
+    <h5 class="card-title">{{title}}</h5>
+    <p class="card-text">{{description}}</p>
+    <p class="card-text">La date de l'evenement : <small class="text-muted">{{moment event_date format="YY, MMMM dd hh:mm"}}</small></p>
+  </div>
+</div>
+{{/each}}
