@@ -67,3 +67,6 @@ to install all the project dependencies.
 7. `knexfile.js` set the connection with the postgreSQL database.
 
 8. `package.json` contias all the dependencies which are used in this application.
+
+9. Migrations allow to define sets of schema changes so upgrading a database is a breeze for details [Migrations](https://knexjs.org/#Migrations).
+
