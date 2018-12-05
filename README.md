@@ -38,18 +38,32 @@ to install all the project dependencies.
 2. db folder contains three files:
 
    - `connection.js`which setup the connection with the database.
-   - `building.js` and `user.js` contains functions to retrive data from the database.
+   - The other files contain functions to retrive data from the database each tables is represented by a file.
 
 3. public folder contains all the front-end assets which are used in the application such as images, css, js, etc.
    in javascripts folder there is:
 
    - `login.js` file, contains the submission of login, signup and setting session variables.
-   - `mapConfiguration.js` file is embedded in the index page (home page) in views folder contains all the map settings such as adding layers, configuring zoom level, etc.
+   - The other files are the layers on the map (This is an optional way to represnt the layers on the map, in our case the files in geojson folder have been used for the map).
 
 4. routes folder contains all the application routers:
 
    - `index.js` contains all basic routes. Ex: http://localhost:3000/
-   - `buildings.js` contains all the routes concerning the buildings. Ex: http://localhost:3000/building/
-   - `users.js` contains all the routes concerning the users. Ex: http://localhost:3000/users/
+   - `events.js` contains all the routes concerning the events. Ex: http://localhost:3000/events/
+   - `sociallife.js` contains all the routes concerning the sociallife. Ex: http://localhost:3000/sociallife/
+   and so on. These routes are set in the app.js file
 
 5. views folder contains all view pages
+	There are two layouts:
+	- `layout.hbs` which is used for the user interface.
+	- `/admin/adminLayout.hbs` which is used for the admin panel.
+
+6. `app.js` is the heart of the application, here we do the following things:
+	- Import all used packages in the application.
+	- Import and set the routes for the app.
+	- Set the view file for the app.
+	- Set the public folder as the container of the front-end files such as css, js, etc.
+
+7. `knexfile.js` set the connection with the postgreSQL database.
+
+8. `package.json` contias all the dependencies which are used in this application.
