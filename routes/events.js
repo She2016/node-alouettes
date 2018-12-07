@@ -10,8 +10,8 @@ function isValidId(req, res, next) {
   next(new Error('Invalid ID'));
 }
 
-/* GET events page. */
-router.get('/', function (req, res, next) {
+/* GET events page. http://localhost:5000/events/ */
+router.get('/', authMiddleware.allowAdmins, function (req, res, next) {
   Events.getAllEvents().then(function (data) {
       res.render('all', {
         title: "All Events",
@@ -25,15 +25,15 @@ router.get('/', function (req, res, next) {
     });
 });
 
-/* GET create event page. */
-router.get('/create', authMiddleware.ensureLoggedIn, function (req, res, next) {
+/* GET create event page.  http://localhost:5000/events/create */
+router.get('/create', authMiddleware.allowAdmins, function (req, res, next) {
   res.render('create', {
     title: 'Create an event!',
     layout: layout
   });
 });
 
-/* POST create event page. */
+/* POST a new event. */
 router.post('/create', function (req, res, next) {
   var event = {
     title: req.body.title,
@@ -49,8 +49,8 @@ router.post('/create', function (req, res, next) {
   });
 });
 
-/* GET create event page. */
-router.get('/edit/:id', isValidId, function (req, res, next) {
+/* GET edit event page.  http://localhost:5000/events/edit/4 */
+router.get('/edit/:id', isValidId,  authMiddleware.allowAdmins, function (req, res, next) {
   Events.getOne(req.params.id).then(function (data) {
     var date = data.event_date
     var event_date = new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString().substring(0, 16)
@@ -68,8 +68,8 @@ router.get('/edit/:id', isValidId, function (req, res, next) {
   });
 });
 
-/* GET create event page. */
-router.post('/edit/:id', function (req, res, next) {
+/* EDIT an event . */
+router.post('/edit/:id', authMiddleware.allowAdmins, function (req, res, next) {
   var eventId = parseInt(req.params.id)
   if (!Number.isInteger(eventId)) {
     next(new Error('Invalid ID'))
@@ -82,8 +82,8 @@ router.post('/edit/:id', function (req, res, next) {
   })
 })
 
-router.get('/delete/:id', isValidId, function (req, res, next) {
-  console.log(req.params.id)
+/* Delete an event */
+router.get('/delete/:id', isValidId, authMiddleware.allowAdmins, function (req, res, next) {
   Events.delete(req.params.id).then(() => {
     req.flash('success_messages', 'You have deleted the event Successfully!')
     res.redirect('/events');

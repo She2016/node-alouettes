@@ -5,7 +5,7 @@ module.exports = {
     return knex('events').where('id', id).first();
   },
   getOneByDate : function(date) {
-    return knex('events').where('email', date).first()
+    return knex('events').where('event_date', date).first()
   },  
   getAllEvents: function() {
     return knex.select().table('events')

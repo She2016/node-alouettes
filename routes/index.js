@@ -1,6 +1,8 @@
 var express = require('express');
 const fs = require('fs')
 var router = express.Router();
+const Messages = require('../db/message')
+
 
 /* GET home page. */
 // router.get('/', function (req, res, next) {
@@ -40,6 +42,28 @@ router.get('/instrumentation', function (req, res, next) {
     title: 'Alouettes',
     layerNames
   });
+});
+
+
+/* GET messages page. */
+router.get('/messages', function (req, res, next) {
+  Messages.getAllMessages().then(function (data) {
+    res.render('all_messages', {
+      title: 'all messages',
+      layout: '/admin/adminLayout',
+      jsonData: data
+    });
+  })
+});
+
+/* Delete message. */
+router.get('/messages/delete/:id', function (req, res, next) {
+  Messages.delete(req.params.id).then(() => {
+    req.flash('success_messages', 'You have deleted the message Successfully!')
+    res.redirect('/messages');
+  }).catch(function (err) {
+    return next(err)
+  })
 });
 
 

@@ -33,7 +33,7 @@ router.get('/create', authMiddleware.ensureLoggedIn, function (req, res, next) {
   });
 });
 
-/* POST create information page. */
+/* POST information. */
 router.post('/create', function (req, res, next) {
   var information = {
     title: req.body.title,
@@ -48,7 +48,7 @@ router.post('/create', function (req, res, next) {
   });
 });
 
-/* GET create information page. */
+/* GET edit information page. */
 router.get('/edit/:id', isValidId, function (req, res, next) {
   Information.getOne(req.params.id).then(function (data) {
     res.render('infoEdit', {
@@ -64,7 +64,7 @@ router.get('/edit/:id', isValidId, function (req, res, next) {
   });
 });
 
-/* GET create information page. */
+/* Edit information. */
 router.post('/edit/:id', isValidId , function (req, res, next) {
   Information.edit(req.params.id, req.body).then(function () {
     req.flash('success_messages', 'You have updated the information Successfully!')
@@ -74,6 +74,7 @@ router.post('/edit/:id', isValidId , function (req, res, next) {
   })
 })
 
+/* Delete information. */
 router.get('/delete/:id', isValidId, function (req, res, next) {
   console.log(req.params.id)
   Information.delete(req.params.id).then(() => {

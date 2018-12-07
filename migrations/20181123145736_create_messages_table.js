@@ -3,11 +3,10 @@ exports.up = function (knex, Promise) {
     table.increments('id')
     table.string('title').notNullable()
     table.string('message').notNullable()
-
+    table.timestamp('message_time').notNullable();
     table.integer('sender_id').unsigned().index().references('id').inTable('users')
-    table.integer('receiver_id').unsigned().index().references('id').inTable('users')
 
-    table.timestamps()
+    table.timestamp('created_at', 6).defaultTo(knex.fn.now(6));
   });
 };
 

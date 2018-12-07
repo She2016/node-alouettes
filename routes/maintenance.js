@@ -9,7 +9,6 @@ router.get('/', function (req, res, next) {
   const testFolder = './public/geojson';
 
   fs.readdirSync(testFolder).forEach(file => {
-
     var fl = file.split('.').slice(0, -1).join('.').replace('_', ' ')
     layerNames.push(fl)
   })
@@ -19,8 +18,7 @@ router.get('/', function (req, res, next) {
   });
 });
 
-router.get('/:name', function (req, res, next) {
-  
+router.get('/:name', function (req, res, next) {  
   res.render('details', {
     title: req.params.name
   });

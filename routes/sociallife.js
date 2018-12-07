@@ -10,20 +10,21 @@ router.get('/', function (req, res, next) {
   });
 });
 
-router.get('/chat', function (req, res, next) {
-  
+/* GET chat page */
+router.get('/chat', function (req, res, next) {  
   res.render('chat', {
     title: 'Chat'
   });
 });
 
-router.get('/suggestions', function (req, res, next) {
-  
+/* GET suggestion page */
+router.get('/suggestions', function (req, res, next) {  
   res.render('suggestions', {
     title: 'Suggestion'
   });
 });
 
+/* GET evenements page */
 router.get('/evenements', function (req, res, next) {
   Events.getAllEvents().then(function (data) {
     res.render('evenements', {
@@ -36,6 +37,7 @@ router.get('/evenements', function (req, res, next) {
   });
 });
 
+/* GET informations page */
 router.get('/informations', function (req, res, next) {
   Information.getAllInformation().then(function (data) {
     res.render('informations', {

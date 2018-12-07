@@ -21,14 +21,14 @@ var app = express();
 
 MomentHandler.registerHelpers(hbs);
 
-// view engine setup
+// Set view folders
 app.set('views', [path.join(__dirname, 'views'), 
                   path.join(__dirname, 'views/events'), 
                   path.join(__dirname, 'views/information'), 
                   path.join(__dirname, 'views/users'),
                   path.join(__dirname, 'views/maintenance'),
                   path.join(__dirname, 'views/sociallife')]);
-app.set('view engine', 'hbs');
+app.set('view engine', 'hbs'); // view engine setup
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -51,13 +51,13 @@ app.use(function(req, res, next){
   next();
 });
 
-app.use('/auth', auth);
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/events', eventsRouter);
-app.use('/information', informationRouter);
-app.use('/maintenance', maintenanceRouter);
-app.use('/sociallife', sociallifeRouter);
+app.use('/auth', auth); // http://localhost:5000/auth
+app.use('/', indexRouter); // http://localhost:5000
+app.use('/users', usersRouter); // http://localhost:5000/users
+app.use('/events', eventsRouter); // http://localhost:5000/events
+app.use('/information', informationRouter); // http://localhost:5000/information
+app.use('/maintenance', maintenanceRouter); // http://localhost:5000/maintenance
+app.use('/sociallife', sociallifeRouter); // http://localhost:5000/sociallife
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

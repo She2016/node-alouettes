@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt-nodejs');
 const router = express.Router();
 const User = require('../db/user');
+const Message = require('../db/message');
 //var session;
 
 router.get('/', (req, res) => {
@@ -149,12 +150,12 @@ router.post('/newsletter', (req, res, next) => {
 				if (!user) {
 					// Insert The user in the DB
 					//User
-						//.create(user).then(id => {
-							res.json({
-								user,
-								message: 'it works'
-							})
-						//})
+					//.create(user).then(id => {
+					res.json({
+						user,
+						message: 'it works'
+					})
+					//})
 				} else {
 					next(new Error('This email is already registered!'))
 				}
@@ -169,22 +170,18 @@ router.post('/suggest', (req, res, next) => {
 	const validTitle = typeof req.body.title == 'string' && req.body.title.trim() != '';
 
 	if (validTitle) {
-		User
-			.getOne(req.signedCookies.user_id)
-			.then(user => {
-				//If user not found
-				if (user) {
-					res.json({
-						user: req.signedCookies.user_name,
-						title : req.body.title,
-						message: req.body.message
-					})
-				} else {
-					next(new Error('You have to sign in!'))
-				}
-			})		
+		var message = {
+			title: req.body.title,
+			message: req.body.message,
+			sender_id: req.signedCookies.user_id,
+			is_read: false,
+			message_time: new Date()
+		}
+		Message.create(message).then(id => {
+			res.json({id})
+		})
 	} else {
-		next(new Error('Invalid Email'))
+		next(new Error('Invalid Title'))
 	}
 })
 

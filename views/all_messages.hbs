@@ -1,0 +1,49 @@
+<div class="content mt-3">
+  <div class="animated fadeIn">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between">
+            <h2 class="card-title">All Messages</h2>
+          </div>
+          <div class="card-body">
+            {{#if success_messages}}
+            <div class="alert alert-success" role="alert" id="errorMessage">{{success_messages}}</div>
+            {{/if}}
+            {{#if error_messages}}
+            <div class="alert alert-danger" role="alert" id="errorMessage">{{error_messages}}</div>
+            {{/if}}
+            <table class="table table-striped table-bordered" id="bootstrap-data-table">
+              <thead>
+                <tr>
+                  <th>Titre</th>
+                  <th>Message</th>
+                  <th>Time</th>
+                  <th>Sender ID</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each jsonData}}
+                <tr>
+                  <td>{{title}}</td>
+                  <td>{{message}}</td>
+                  <td>{{message_time}}</td>
+                  <td>{{sender_id}}</td>
+                  <td>
+                    <div class="d-flex justify-content-around">
+                      <div><a href='/messages/delete/{{id}}' onclick="return confirm('Are you sure you want to delete this item?');"><i
+                            class="fa fa-trash"></i></a></div>
+                    </div>
+
+                  </td>
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
