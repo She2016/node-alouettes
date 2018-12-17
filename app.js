@@ -24,6 +24,7 @@ MomentHandler.registerHelpers(hbs);
 // Set view folders
 app.set('views', [path.join(__dirname, 'views'), 
                   path.join(__dirname, 'views/events'), 
+                  path.join(__dirname, 'views/admin'), 
                   path.join(__dirname, 'views/information'), 
                   path.join(__dirname, 'views/users'),
                   path.join(__dirname, 'views/maintenance'),

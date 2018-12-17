@@ -50,7 +50,7 @@ function setLocalStorage(user) { // Set session variables
 	sessionStorage.setItem('user_name', user.name)
 	sessionStorage.setItem('user_type', user.type)
 	if (user.type == 'admin') {
-		window.location = `/events`
+		window.location = `/admin`
 	} else {
 		window.location = `/`
 	}

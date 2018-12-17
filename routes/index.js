@@ -2,6 +2,8 @@ var express = require('express');
 const fs = require('fs')
 var router = express.Router();
 const Messages = require('../db/message')
+var authMiddleware = require('../auth/middleware');
+
 
 
 /* GET home page. */
@@ -24,6 +26,15 @@ router.get('/', function (req, res, next) {
 
   res.render('index', {
     title: 'Alouettes'
+  });
+});
+
+/* GET home page. */
+router.get('/admin', authMiddleware.allowAdmins, function (req, res, next) {
+
+  res.render('admin', {
+    title: 'Admin panel',
+    layout: '/admin/adminLayout'
   });
 });
 
