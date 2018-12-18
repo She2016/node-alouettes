@@ -13,7 +13,7 @@ to install all the project dependencies.
 
 > node start
 
-6. Open the browser on `http://localhost:5000/` thats it!
+6. Open the browser on `http://localhost:5000/` thats it! The port number can be modified from the file `bin/www`.
 
 ## Technologies used
 
